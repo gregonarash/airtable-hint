@@ -1,10 +1,10 @@
-import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path, { resolve } from "path";
-import makeManifest from "./utils/plugins/make-manifest";
-import customDynamicImport from "./utils/plugins/custom-dynamic-import";
-import addHmr from "./utils/plugins/add-hmr";
+import { defineConfig } from "vite";
 import manifest from "./manifest";
+import addHmr from "./utils/plugins/add-hmr";
+import customDynamicImport from "./utils/plugins/custom-dynamic-import";
+import makeManifest from "./utils/plugins/make-manifest";
 
 const root = resolve(__dirname, "src");
 const pagesDir = resolve(root, "pages");
@@ -41,13 +41,14 @@ export default defineConfig({
     reportCompressedSize: isProduction,
     rollupOptions: {
       input: {
-        devtools: resolve(pagesDir, "devtools", "index.html"),
+        //devtools: resolve(pagesDir, "devtools", "index.html"),
         panel: resolve(pagesDir, "panel", "index.html"),
         content: resolve(pagesDir, "content", "index.ts"),
         background: resolve(pagesDir, "background", "index.ts"),
-        contentStyle: resolve(pagesDir, "content", "style.scss"),
-        popup: resolve(pagesDir, "popup", "index.html"),
-        newtab: resolve(pagesDir, "newtab", "index.html"),
+        contentStyle: resolve(pagesDir, "content", "style.css"),
+        extension: resolve(pagesDir, "content", "extension.js"),
+        //popup: resolve(pagesDir, "popup", "index.html"),
+        //newtab: resolve(pagesDir, "newtab", "index.html"),
         options: resolve(pagesDir, "options", "index.html"),
       },
       watch: {

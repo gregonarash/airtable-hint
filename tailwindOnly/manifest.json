@@ -1,12 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "chrome-extension-boilerplate-react-vite with Tailwind",
-  "version": "0.0.1",
-  "description": "chrome extension boilerplate",
-  "options_page": "src/pages/options/index.html",
-  "background": {
-    "service_worker": "src/pages/background/index.js"
-  },
+  "name": "Tailwind CSS JIT in-browser compiler",
+  "version": "3.2.4",
+  "description": "Locally injected version of https://cdn.tailwindcss.com/ to be used in dev to support hmr and JIT classes parsing",
   "icons": {
     "128": "icon-128.png"
   },
@@ -17,7 +13,6 @@
       "css": ["assets/css/contentStyle.chunk.css"]
     }
   ],
-  "devtools_page": "src/pages/devtools/index.html",
   "web_accessible_resources": [
     {
       "resources": [

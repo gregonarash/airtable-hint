@@ -1,4 +1,4 @@
-@import "@assets/style/theme.scss";
+@import "@assets/style/tailwind.css";
 
 .content-view {
   font-size: 30px;
