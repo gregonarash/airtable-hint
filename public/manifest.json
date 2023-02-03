@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "chrome-extension-boilerplate-react-vite with Tailwind",
+  "name": "chrome-extension-boilerplate-react-vite",
   "version": "0.0.1",
   "description": "chrome extension boilerplate",
   "options_page": "src/pages/options/index.html",
@@ -12,9 +12,17 @@
   },
   "content_scripts": [
     {
-      "matches": ["http://*/*", "https://*/*", "<all_urls>"],
-      "js": ["src/pages/content/index.js"],
-      "css": ["assets/css/contentStyle.chunk.css"]
+      "matches": [
+        "http://*/*",
+        "https://*/*",
+        "<all_urls>"
+      ],
+      "js": [
+        "src/pages/content/index.js"
+      ],
+      "css": [
+        "assets/css/contentStyle.chunk.css"
+      ]
     }
   ],
   "devtools_page": "src/pages/devtools/index.html",
@@ -27,7 +35,9 @@
         "icon-128.png",
         "icon-34.png"
       ],
-      "matches": ["*://*/*"]
+      "matches": [
+        "*://*/*"
+      ]
     }
   ]
 }

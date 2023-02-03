@@ -19896,9 +19896,9 @@ var fO = We(qh()),
 function We(r) {
   return r && r.__esModule ? r : { default: r };
 }
-console.warn(
-  "cdn.tailwindcss.com should not be used in production. To use Tailwind CSS in production, install it as a PostCSS plugin or use the Tailwind CLI: https://tailwindcss.com/docs/installation"
-);
+// console.warn(
+//   "cdn.tailwindcss.com should not be used in production. To use Tailwind CSS in production, install it as a PostCSS plugin or use the Tailwind CLI: https://tailwindcss.com/docs/installation"
+// );
 var Mn = "tailwind",
   Pl = "text/tailwindcss",
   Cw = "/template.html",

@@ -6,7 +6,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="content-view fixed top-64 left-32 hidden bg-green-500">
+    <div className="content-view fixed bottom-10 left-10 bg-green-500 p-5 text-2xl">
       content view 37
     </div>
   );
