@@ -46,7 +46,7 @@ export default defineConfig({
         content: resolve(pagesDir, "content", "index.ts"),
         background: resolve(pagesDir, "background", "index.ts"),
         contentStyle: resolve(pagesDir, "content", "style.css"),
-        extension: resolve(pagesDir, "content", "extension.js"),
+        extension: resolve(pagesDir, "content", "extension.ts"),
         //popup: resolve(pagesDir, "popup", "index.html"),
         //newtab: resolve(pagesDir, "newtab", "index.html"),
         options: resolve(pagesDir, "options", "index.html"),
