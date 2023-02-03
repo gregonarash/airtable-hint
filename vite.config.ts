@@ -24,6 +24,7 @@ export default defineConfig({
       "@src": root,
       "@assets": assetsDir,
       "@pages": pagesDir,
+      "@utils": resolve(__dirname, "utils"),
     },
   },
   plugins: [
