@@ -11,6 +11,8 @@ const pagesDir = resolve(root, "pages");
 const assetsDir = resolve(root, "assets");
 const outDir = resolve(__dirname, "dist");
 const publicDir = resolve(__dirname, "public");
+const contentDir = resolve(pagesDir, "content");
+const componentsDir = resolve(contentDir, "components");
 
 const isDev = process.env.__DEV__ === "true";
 const isProduction = !isDev;
@@ -25,6 +27,7 @@ export default defineConfig({
       "@assets": assetsDir,
       "@pages": pagesDir,
       "@utils": resolve(__dirname, "utils"),
+      "@/components": componentsDir,
     },
   },
   plugins: [
