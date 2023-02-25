@@ -31,7 +31,6 @@ export async function createCompletion({
     );
 
     const json = await response.json();
-    console.log("json", json);
     if (response.status !== 200) {
       throw json || "Error connecting to OpenAI";
     }
