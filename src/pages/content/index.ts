@@ -10,8 +10,8 @@ try {
   console.error(e);
 }
 
+// Placeholder for message handling
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  console.log("runtime message received ", request);
   if (request.color === "green") {
     document.body.style.backgroundColor = "green";
     sendResponse({ status: "done" });
@@ -22,7 +22,6 @@ function addScript(src: string) {
   const script = document.createElement("script");
   script.type = "module";
   script.src = chrome.runtime.getURL(src);
-  console.log("adding script", script);
   (document.body || document.head || document.documentElement).appendChild(
     script
   );

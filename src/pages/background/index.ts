@@ -4,8 +4,7 @@ reloadOnUpdate("pages/background");
 
 console.log("background loaded");
 
-console.log("background runtime", chrome.runtime);
-
+//Placeholder
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   console.log("content script received message", request);
   if (request.color === "green") {

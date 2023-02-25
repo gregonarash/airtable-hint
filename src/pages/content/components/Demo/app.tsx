@@ -25,7 +25,6 @@ export default function App() {
   useEffect(() => {
     const checkIfApiKeySaved = async () => {
       const apiKey = await chrome.storage.sync.get("apiKey");
-      console.log("checkApiKey", apiKey);
       if (apiKey) setApiKey(apiKey.apiKey);
     };
     checkIfApiKeySaved();
@@ -47,7 +46,6 @@ export default function App() {
     ) {
       return;
     }
-    console.log("content script received message secure2", event);
     switch (event.data.type) {
       case "processPrompt":
         processPrompt(event.data.payload);
@@ -96,7 +94,7 @@ export default function App() {
         type: "addControlButtons",
       });
     } else {
-      console.log("API keys not exist, open window");
+      //API keys not exist, open window
       setDialogOpen(true);
       sendMessageToInjectedScript({
         type: "turnOffAirtableKeyFeautres",
@@ -108,10 +106,8 @@ export default function App() {
   };
 
   async function updateStorage({ key, payload }) {
-    console.log("updating storage", payload);
     await chrome.storage.sync.set({ [key]: payload });
     const data = await chrome.storage.sync.get(key);
-    console.log("storage updated", data);
   }
 
   function getBaseSchema() {
@@ -149,7 +145,6 @@ export default function App() {
             <Button
               variant="green"
               onClick={(e) => {
-                console.log("button edit  clicked", e);
                 sendMessageToInjectedScript({
                   type: "turnOffAirtableKeyFeautres",
                 });

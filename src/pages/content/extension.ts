@@ -28,6 +28,7 @@ const hintGPTOnClick = () => {
   extensionRoot.id = "extension";
   document.body.appendChild(extensionRoot);
 
+  //@ts-ignore
   const prompt = monaco.editor.getModels()[0].getValue();
 
   sendMessage({
@@ -53,7 +54,6 @@ function onMessage(event) {
   ) {
     return;
   }
-  console.log("injected script received message ", event);
   switch (event.data.type) {
     case "turnOffAirtableKeyFeautres":
       turnOffAirtableKeyFeautres();
@@ -84,11 +84,12 @@ function onMessage(event) {
 function turnOffAirtableKeyFeautres() {
   // turning off Airtable jQuery keydown event, that prevents backspace on modal.
   // Majority of browsers do not trigger back navigation on backspace, so this should not be needed.
+  // @ts-ignore
   window.jQuery(document).off("keydown");
-  //console.log(window.jQuery(document).off("keydown"));
 }
 
 function setMonaco(text) {
+  //@ts-ignore
   monaco.editor.getModels()[0].setValue(text);
 }
 
@@ -141,6 +142,7 @@ const waitingAnimation = () => {
   mouseBottom[3] = "`,-,-'~~~   ";
   const infoText = "(Looking for your answer in AI maze...)";
 
+  // @ts-ignore
   const initialInput = monaco.editor.getModels()[0].getValue();
   let distance = 30;
   const interval = setInterval(() => {
@@ -155,6 +157,7 @@ const waitingAnimation = () => {
         " ".repeat(distance) +
         mouseBottom[distance % 4];
       distance--;
+      // @ts-ignore
       monaco.editor.getModels()[0].setValue(animation);
       if (distance === 0) distance = 30;
     } else clearInterval(interval);
@@ -176,8 +179,6 @@ function addHintGPTButton() {
     payload: true,
   });
   history = [];
-  //to log history in console
-  window.historyGPT = history;
 }
 
 function addControlButtons() {
@@ -276,6 +277,7 @@ const observerForPresentationPanel = new MutationObserver(function (mutations) {
 });
 
 //observer for the monaco field focus
+//TODO
 function monacoFocusHandler() {
   const observerForMonacoFieldFocus = new MutationObserver(function (
     mutations

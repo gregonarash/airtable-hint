@@ -25,7 +25,6 @@ export async function createCompletion({
   };
 
   try {
-    console.log("prompt", prompt);
     const response = await fetch(
       "https://api.openai.com/v1/completions",
       options
