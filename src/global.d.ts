@@ -1,5 +1,9 @@
 import Chrome from "chrome";
 
+declare namespace monaco {
+  const monaco: any;
+  export default monaco;
+}
 declare namespace chrome {
   export default Chrome;
 }

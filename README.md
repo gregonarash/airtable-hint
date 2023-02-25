@@ -1,52 +1,61 @@
 <div align="center">
 <img src="public/icon-128.png" alt="logo"/>
-<h1> Chrome Extension Boilerplate with<br/>React + Vite + TypeScript</h1>
+<h1> Airtable Hint GPT Chrome extension</h1>
 
 ![](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black)
 ![](https://img.shields.io/badge/Typescript-3178C6?style=flat-square&logo=typescript&logoColor=white)
+![](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)
 ![](https://badges.aleen42.com/src/vitejs.svg)
-![GitHub action badge](https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite/actions/workflows/build.yml/badge.svg)
-<img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https://github.com/Jonghakseo/chrome-extension-boilerplate-react-viteFactions&count_bg=%23#222222&title_bg=%23#454545&title=😀&edge_flat=true" alt="hits"/>
+![GitHub action badge](https://github.com/gregonarash/airtable-hint/actions/workflows/build.yml/badge.svg)
 
-
-> This project is listed in the [Awesome Vite](https://github.com/vitejs/awesome-vite)
+> Chrome extension for Airtable adding OpenAI GPT based code hints to Airtable formula field
 
 </div>
 
 ## Table of Contents
 
 - [Intro](#intro)
-- [Features](#features)
 - [Installation](#installation)
-  - [Procedures](#procedures)
+  - [Download pre-built extension](#download)
+  - [Install code and build locally](#local_installation)
 - [Screenshots](#screenshots)
   - [NewTab](#newtab)
-  - [Popup](#popup)  
-- [Documents](#documents)
-
+  - [Popup](#popup)
+- [Extension Stack](#extension_stack)
 
 ## Intro <a name="intro"></a>
-This boilerplate is made for creating chrome extensions using React and Typescript.
-> The focus was on improving the build speed and development experience with Vite.
 
-## Features <a name="features"></a>
-- [React 18](https://reactjs.org/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Jest](https://jestjs.io/)
-- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
-- [Vite](https://vitejs.dev/)
-- [SASS](https://sass-lang.com/)
-- [ESLint](https://eslint.org/)
-- [Prettier](https://prettier.io/)
-- [Chrome Extension Manifest Version 3](https://developer.chrome.com/docs/extensions/mv3/intro/)
-- HMR(incomplete)
-  - [Refresh PR](https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite/pull/25)
+Chrome extension for Airtable adding OpenAI GPT based code hints to Airtable formula field.
+
+This extension utilizes OpenAI GPT-3 (model "text-davinci-003") to provide code hints for Airtable formula fields. It plugs into the Airtable formula editor (based on Monaco editor) and provides code hint based on the prompt provided by the user inside the field.
+
+The prompt is wrapped in an extra set of instructions before being sent to OpenAI GPT-3. The intention is to simplify the prompt and make sure the OpenAI response is provided in format of Airtable formula. The prompt is wrapped in the following format:
+
+```
+I want to generate Airtable formula that will do following:
+${userPrompt}
+
+Make sure the response is a valid Airtable formula.
+```
+
+The prompt is sent to OpenAI with following parameters:
+
+- "max_tokens" set to 3500 to provide sufficient room for longer prompts
+- "temperature" as adjusted by user in the extension settings, defaults to 0.2
+- "model" = "text-davinci-003" Based on tests the "codex" models were performing worse than "davinci" model.
 
 ## Installation <a name="installation"></a>
 
-### Procedures <a name="procedures"></a>
+Extension requires OpenAI account and API key. The API key can be obtained from [OpenAI dashboard](https://platform.openai.com/account/api-keys).
+
+### Download pre-built extension <a name="download"></a>
+
+1. Download the latest version from: TBC
+
+### Install code and build locally <a name="local_installation"></a>
+
 1. Clone this repository.
-2. Change `name` and `description` in package.json => **Auto synchronize with manifest** 
+2. Change `name` and `description` in package.json => **Auto synchronize with manifest**
 3. Run `yarn install` or `npm i` (check your node version >= 16.6, recommended >= 18)
 4. Run `yarn dev` or `npm run dev`
 5. Load Extension on Chrome
@@ -57,33 +66,34 @@ This boilerplate is made for creating chrome extensions using React and Typescri
    5. Select - `dist` folder in this project (after dev or build)
 6. If you want to build in production, Just run `yarn build` or `npm run build`.
 
-## Screenshots <a name="screenshots"></a>
+## Extension Stack <a name="extension_stack"></a>
 
-### New Tab <a name="newtab"></a>
+The base for this extension was forked from [Jonghakseo/chrome-extension-boilerplate-react-vite](https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite#intro) and modified to fit the needs of this extension.
 
-<img width="971" src="https://user-images.githubusercontent.com/53500778/162631646-cd40976b-b737-43d0-8e6a-6ac090a2e2d4.png">
+The core difference was adding Tailwind CSS. To avoid clashes with Airtable CSS, the extension is using shadow DOM to encapsulate the extension UI. To enable Tailwind inside of shadow DOM I am using Twind,
+which converts Tailwind into classes at runtime.
 
-### Popup <a name="popup"></a>
+The Hint GPT button is inserted into the Airtable UI, using some ugly JQuery.
 
-<img width="314" alt="popup" src="https://user-images.githubusercontent.com/53500778/203561728-23517d46-12e3-4139-8a4f-e0b2f22a6ab3.png">
-
-
-## Documents <a name="documents"></a>
-- [Vite Plugin](https://vitejs.dev/guide/api-plugin.html)
-- [ChromeExtension](https://developer.chrome.com/docs/extensions/mv3/)
-- [Rollup](https://rollupjs.org/guide/en/)
-- [Rollup-plugin-chrome-extension](https://www.extend-chrome.dev/rollup-plugin)
-
-
-
----
-## Thanks To
-
-| [Jetbrains](https://jb.gg/OpenSourceSupport)                                                                           | [Jackson Hong](https://www.linkedin.com/in/j-acks0n/)                                            |
-|--------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|
-| <img width="100" src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.png" alt="JetBrains Logo (Main) logo."> | <img width="100" src='https://avatars.githubusercontent.com/u/23139754?v=4' alt='Jackson Hong'/> |
-
+- [React 18](https://reactjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Vite](https://vitejs.dev/)
+- [Tailwind CSS](https://tailwindcss.com/) - for styling
+- [Twind](https://twind.style/) - for runtime Tailwind CSS classes
+- [shadcn/ui] (https://ui.shadcn.com/) - for UI components on the settings page
+- [AutoAnimate](https://auto-animate.formkit.com/) - adding a simple animation
+- [SASS](https://sass-lang.com/) - still there but not utilized
+- [ESLint](https://eslint.org/)
+- [Prettier](https://prettier.io/)
+- [Chrome Extension Manifest Version 3](https://developer.chrome.com/docs/extensions/mv3/intro/)
+- [Jest](https://jestjs.io/)
+- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
+- HMR[incomplete](https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite/pull/25)
 
 ---
 
-[Jonghakseo](https://nookpi.tistory.com/)
+_Business Automated!_ is an independent automation consultancy. If you would like to request a custom automation or product for your business, visit us at [Business-Automated.com](https://business-automated.com/)
+
+Follow us on Twitter🐦: https://twitter.com/BAutomated
+Watch more on Youtube ️📺: https://www.youtube.com/c/BusinessAutomatedTutorials
+If you like our tutorials — buy us a coffee☕: https://www.buymeacoffee.com/business

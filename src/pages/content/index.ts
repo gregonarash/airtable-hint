@@ -1,5 +1,3 @@
-console.log("content loaded content/index.ts");
-
 /**
  * @description
  * Chrome extensions don't support modules in content scripts.
@@ -11,6 +9,14 @@ try {
 } catch (e) {
   console.error(e);
 }
+
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  console.log("runtime message received ", request);
+  if (request.color === "green") {
+    document.body.style.backgroundColor = "green";
+    sendResponse({ status: "done" });
+  }
+});
 
 function addScript(src: string) {
   const script = document.createElement("script");
