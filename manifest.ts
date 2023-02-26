@@ -8,8 +8,8 @@ const manifest: chrome.runtime.ManifestV3 = {
   name: packageJson.name,
   version: packageJson.version,
   description: packageJson.description,
-  options_page: "src/pages/options/index.html",
-  background: { service_worker: "src/pages/background/index.js" },
+  // options_page: "src/pages/options/index.html",
+  // background: { service_worker: "src/pages/background/index.js" },
   // action: {
   //   default_popup: "src/pages/popup/index.html",
   //   default_icon: "icon-34.png",

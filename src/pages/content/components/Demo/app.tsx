@@ -214,7 +214,7 @@ export default function App() {
                 </Button>
               </div>
             </div>
-            <div ref={ref}> {apiKey !== "" && <ModelParams />}</div>
+            <div ref={ref}> {apiKey && <ModelParams />}</div>
 
             <DialogFooter>
               <Button type="submit" onClick={() => setDialogOpen(false)}>

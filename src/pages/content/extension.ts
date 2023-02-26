@@ -231,7 +231,7 @@ const observerForPresentationPanel = new MutationObserver(function (mutations) {
       for (let node of newNodes) {
         if (
           node.nodeType === Node.ELEMENT_NODE &&
-          (node as Element).role === "presentation"
+          (node as Element & { role: string }).role === "presentation"
         ) {
           observerForMonacoField.observe(
             document.querySelector("[role='presentation']"),
@@ -257,7 +257,7 @@ const observerForPresentationPanel = new MutationObserver(function (mutations) {
       for (let node of removedNodes) {
         if (
           node.nodeType === Node.ELEMENT_NODE &&
-          (node as Element).role === "presentation"
+          (node as Element & { role: string }).role === "presentation"
         ) {
           const settingsButton = document
             .querySelector("#airtable-hint-root")

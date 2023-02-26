@@ -1,11 +1,11 @@
 {
-  "name": "chrome-extension-boilerplate-react-vite",
-  "version": "0.0.1",
-  "description": "chrome extension boilerplate",
+  "name": "airtable-hint-gpt",
+  "version": "1.0.0",
+  "description": "GPT hints for Airtable formula field",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite.git"
+    "url": "https://github.com/gregonarash/airtable-hint"
   },
   "scripts": {
     "build": "tsc --noEmit && vite build",

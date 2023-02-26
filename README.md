@@ -6,6 +6,7 @@
 ![](https://img.shields.io/badge/Typescript-3178C6?style=flat-square&logo=typescript&logoColor=white)
 ![](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)
 ![](https://badges.aleen42.com/src/vitejs.svg)
+
 ![GitHub action badge](https://github.com/gregonarash/airtable-hint/actions/workflows/build.yml/badge.svg)
 
 > Chrome extension for Airtable adding OpenAI GPT based code hints to Airtable formula field
@@ -80,7 +81,7 @@ The Hint GPT button is inserted into the Airtable UI, using some ugly JQuery.
 - [Vite](https://vitejs.dev/)
 - [Tailwind CSS](https://tailwindcss.com/) - for styling
 - [Twind](https://twind.style/) - for runtime Tailwind CSS classes
-- [shadcn/ui] (https://ui.shadcn.com/) - for UI components on the settings page
+- [shadcn/ui](https://ui.shadcn.com/) - for UI components on the settings page
 - [AutoAnimate](https://auto-animate.formkit.com/) - adding a simple animation
 - [SASS](https://sass-lang.com/) - still there but not utilized
 - [ESLint](https://eslint.org/)
@@ -88,7 +89,7 @@ The Hint GPT button is inserted into the Airtable UI, using some ugly JQuery.
 - [Chrome Extension Manifest Version 3](https://developer.chrome.com/docs/extensions/mv3/intro/)
 - [Jest](https://jestjs.io/)
 - [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
-- HMR[incomplete](https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite/pull/25)
+- HMR [incomplete](https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite/pull/25)
 
 ---
 
