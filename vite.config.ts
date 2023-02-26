@@ -46,14 +46,14 @@ export default defineConfig({
     rollupOptions: {
       input: {
         //devtools: resolve(pagesDir, "devtools", "index.html"),
-        panel: resolve(pagesDir, "panel", "index.html"),
+        //panel: resolve(pagesDir, "panel", "index.html"),
         content: resolve(pagesDir, "content", "index.ts"),
-        background: resolve(pagesDir, "background", "index.ts"),
+        //background: resolve(pagesDir, "background", "index.ts"),
         contentStyle: resolve(pagesDir, "content", "style.css"),
         extension: resolve(pagesDir, "content", "extension.ts"),
         //popup: resolve(pagesDir, "popup", "index.html"),
         //newtab: resolve(pagesDir, "newtab", "index.html"),
-        options: resolve(pagesDir, "options", "index.html"),
+        //options: resolve(pagesDir, "options", "index.html"),
       },
       watch: {
         include: ["src/**", "vite.config.ts"],
