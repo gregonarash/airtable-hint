@@ -11,7 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { createCompletion } from "@utils/openAi";
+import { createChatCompletion } from "@utils/openAi";
 import { useEffect, useState } from "react";
 import ModelParams from "../ModelParams/ModelParams";
 import { Button } from "../ui/button";
@@ -75,15 +75,10 @@ export default function App() {
       // ${baseSchema.join(", ")}.
 
       const userPrompt = payload.match(/\.$/g) ? payload : payload + ".";
-      const prompt = `
-      I want to generate Airtable formula that will do following:
-      ${userPrompt}
 
-      Make sure the response is a valid Airtable formula.`;
-
-      const response = await createCompletion({
+      const response = await createChatCompletion({
         apiKey: apiKey.apiKey,
-        prompt,
+        userPrompt,
       });
 
       sendMessageToInjectedScript({
