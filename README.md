@@ -32,6 +32,8 @@ This extension utilizes OpenAI GPT-3 (model "text-davinci-003") to provide code 
 
 The prompt is wrapped in an extra set of instructions before being sent to OpenAI GPT-3. The intention is to simplify the prompt and make sure the OpenAI response is provided in format of Airtable formula. The prompt is wrapped in the following format:
 
+Regular Completions Mode
+
 ```
 I want to generate Airtable formula that will do following:
 ${userPrompt}
@@ -39,11 +41,24 @@ ${userPrompt}
 Make sure the response is a valid Airtable formula.
 ```
 
+ChatGPT Completions Mode
+
+```
+    {
+      role: "system",
+      content:
+        "You are a bot providing Airtable formulas. Respond with a formulas only and nothing else. No additional explanation is needed, only a valid Airtable formula without quotation marks.",
+    },
+    { role: "user", content: userPrompt },
+```
+
 The prompt is sent to OpenAI with following parameters:
 
 - "max_tokens" set to 3500 to provide sufficient room for longer prompts
 - "temperature" as adjusted by user in the extension settings, defaults to 0.2
-- "model" = "text-davinci-003" Based on tests the "codex" models were performing worse than "davinci" model.
+- "model"
+  - Regular Completions Mode "text-davinci-003". Based on tests the "codex" models were performing worse than "davinci" model.
+  - ChatGPT Completions Mode "gpt-3.5-turbo" which should point to the latest updated version of chat model.
 
 ## Installation <a name="installation"></a>
 
