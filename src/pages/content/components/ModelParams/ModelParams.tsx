@@ -3,9 +3,11 @@ import { Button } from "../ui/button";
 import { DialogDescription } from "../ui/dialog";
 import { Label } from "../ui/label";
 import { Slider } from "../ui/slider";
+import { Switch } from "../ui/switch";
 
 const ModelParams = () => {
   const [temp, setTemp] = useState<number>(0.2);
+  const [chatMode, setChatMode] = useState<boolean>(true);
 
   useEffect(() => {
     const getTemp = async () => {
@@ -15,6 +17,16 @@ const ModelParams = () => {
       }
     };
     getTemp();
+  }, []);
+
+  useEffect(() => {
+    const getCompletionMode = async () => {
+      const chatCompletions = await chrome.storage.sync.get("chatCompletions");
+      if (chatCompletions) {
+        setChatMode(chatCompletions.chatCompletions);
+      }
+    };
+    getCompletionMode();
   }, []);
 
   return (
@@ -66,10 +78,32 @@ const ModelParams = () => {
           </svg>
         </Button>
       </div>
-      <div>
-        <span className="font-semibold">Default 0.2</span>. Setting temperature
+      <div className="pb-4">
+        <span className="font-semibold">Default: 0.2</span> Setting temperature
         to 0 will make the answers mostly deterministic, while a higher number
         will create more randomness/variety in the responses.
+      </div>
+      <div className="flex items-center space-x-2 pb-4">
+        <Switch
+          checked={chatMode}
+          onCheckedChange={async (e) => {
+            setChatMode(e);
+            await chrome.storage.sync.set({ chatCompletions: e });
+          }}
+          id="chat-completion-mode"
+        />
+        <Label htmlFor="airplane-mode">
+          {chatMode
+            ? "ChatGPT Completion Model"
+            : "Regular GPT Completion Model"}
+        </Label>
+      </div>
+      <div className="pb-4">
+        <span className="font-semibold">Default: ChatGPT Completion Model</span>{" "}
+        We recommend using ChatGPT completions (based on the "gpt-3.5-turbo"
+        model). Regular GPT completions are based on "text-davinci-003" model.
+        While both types yield similar results in most cases, the ChatGPT model
+        is significantly cheaper to use.
       </div>
     </div>
   );

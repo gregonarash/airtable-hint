@@ -1,4 +1,17 @@
-export async function createCompletion({
+export async function createCompletion({ apiKey, userPrompt }) {
+  const chatKeyInStorage = await chrome.storage.sync.get("chatCompletions");
+  //defaults to true if chatCompletions is not set
+  const chatCompletion =
+    chatKeyInStorage.chatCompletions == null ||
+    chatKeyInStorage.chatCompletions;
+
+  console.log("chatCompletion in request function", chatCompletion);
+
+  if (chatCompletion) return await createChatCompletion({ apiKey, userPrompt });
+  else return await createRegularCompletion({ apiKey, userPrompt });
+}
+
+export async function createRegularCompletion({
   apiKey,
   userPrompt,
 }: {

@@ -11,7 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { createChatCompletion } from "@utils/openAi";
+import { createCompletion } from "@utils/openAi";
 import { useEffect, useState } from "react";
 import ModelParams from "../ModelParams/ModelParams";
 import { Button } from "../ui/button";
@@ -76,7 +76,7 @@ export default function App() {
 
       const userPrompt = payload.match(/\.$/g) ? payload : payload + ".";
 
-      const response = await createChatCompletion({
+      const response = await createCompletion({
         apiKey: apiKey.apiKey,
         userPrompt,
       });
