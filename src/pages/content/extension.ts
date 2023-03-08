@@ -166,13 +166,20 @@ const waitingAnimation = () => {
 
 function addHintGPTButton() {
   if ($("#hintGPT").length) return;
-  $("#hyperbaseContainer > [role='presentation']")
-    .find(
-      ".flex.items-baseline.justify-end div:first-child,.flex.items-baseline.justify-end button:first-child"
-    )
-    .after(
-      '<div tabindex="0" aria-label="Hint GPT" id="hintGPT" class="text-white mr2 flex-none flex-inline items-center justify-center rounded green greenDark1-hover greenDark1-focus strong pointer focus-visible" role="button" style="width: 80px; height: 26px;">Hint GPT</div>'
-    );
+
+  const cancelButtonLocation = $(
+    "#hyperbaseContainer > [role='presentation']"
+  ).find("#createColumnDialogCancelButton").length
+    ? $("#hyperbaseContainer > [role='presentation']").find(
+        "#createColumnDialogCancelButton"
+      )
+    : $("#hyperbaseContainer > [role='presentation']")
+        .find("div:contains('Cancel')")
+        .filter("[role='button']");
+
+  cancelButtonLocation.after(
+    '<div tabindex="0" aria-label="Hint GPT" id="hintGPT" class="text-white mr2 flex-none flex-inline items-center justify-center rounded green greenDark1-hover greenDark1-focus strong pointer focus-visible" role="button" style="width: 80px; height: 26px;">Hint GPT</div>'
+  );
   $("#hintGPT").on("click", hintGPTOnClick);
   sendMessage({
     type: "setShowSettings",

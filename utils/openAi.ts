@@ -5,8 +5,6 @@ export async function createCompletion({ apiKey, userPrompt }) {
     chatKeyInStorage.chatCompletions == null ||
     chatKeyInStorage.chatCompletions;
 
-  console.log("chatCompletion in request function", chatCompletion);
-
   if (chatCompletion) return await createChatCompletion({ apiKey, userPrompt });
   else return await createRegularCompletion({ apiKey, userPrompt });
 }
