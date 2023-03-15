@@ -22,7 +22,7 @@ const ModelParams = () => {
   useEffect(() => {
     const getCompletionMode = async () => {
       const chatCompletions = await chrome.storage.sync.get("chatCompletions");
-      if (chatCompletions) {
+      if (chatCompletions && chatCompletions.chatCompletions !== undefined) {
         setChatMode(chatCompletions.chatCompletions);
       }
     };
