@@ -4,6 +4,7 @@
  */
 import("./components/Demo");
 
+console.log("content extension loaded");
 try {
   addScript("src/pages/extension/index.js");
 } catch (e) {
@@ -25,4 +26,5 @@ function addScript(src: string) {
   (document.body || document.head || document.documentElement).appendChild(
     script
   );
+  console.log("loaded content context injected script");
 }

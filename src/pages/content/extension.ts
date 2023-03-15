@@ -165,6 +165,7 @@ const waitingAnimation = () => {
 };
 
 function addHintGPTButton() {
+  console.log("addHintGPTButton");
   if ($("#hintGPT").length) return;
 
   const cancelButtonLocation = $(
@@ -176,6 +177,8 @@ function addHintGPTButton() {
     : $("#hyperbaseContainer > [role='presentation']")
         .find("div:contains('Cancel')")
         .filter("[role='button']");
+
+  console.log("cancelButtonLocation", cancelButtonLocation);
 
   cancelButtonLocation.after(
     '<div tabindex="0" aria-label="Hint GPT" id="hintGPT" class="text-white mr2 flex-none flex-inline items-center justify-center rounded green greenDark1-hover greenDark1-focus strong pointer focus-visible" role="button" style="width: 80px; height: 26px;">Hint GPT</div>'
@@ -209,6 +212,7 @@ const observerForMonacoField = new MutationObserver(function (mutations) {
           (node as Element).classList.contains("monaco-editor") &&
           (node as Element).classList.contains("no-user-select")
         ) {
+          console.log("monaco field found in monaco field observer");
           addHintGPTButton();
           //monacoFocusHandler();
         }
@@ -232,7 +236,9 @@ const observerForMonacoField = new MutationObserver(function (mutations) {
 
 //top level observer for the column presentation panel
 const observerForPresentationPanel = new MutationObserver(function (mutations) {
+  console.log("observer for presentation panel");
   mutations.forEach(function (mutation) {
+    console.log("mutations of panel  happening");
     if (mutation.addedNodes.length) {
       const newNodes = mutation.addedNodes;
       for (let node of newNodes) {
@@ -240,6 +246,7 @@ const observerForPresentationPanel = new MutationObserver(function (mutations) {
           node.nodeType === Node.ELEMENT_NODE &&
           (node as Element & { role: string }).role === "presentation"
         ) {
+          console.log("launchning  observer for monaco field");
           observerForMonacoField.observe(
             document.querySelector("[role='presentation']"),
             {
@@ -253,6 +260,9 @@ const observerForPresentationPanel = new MutationObserver(function (mutations) {
               .querySelector("[role='presentation']")
               .querySelector(".monaco-editor")
           ) {
+            console.log(
+              "monaco field already there, executing addHintGPTButton"
+            );
             addHintGPTButton();
             //monacoFocusHandler();
           }
@@ -304,6 +314,12 @@ function monacoFocusHandler() {
     }
   );
 }
+
+console.log("loading  oberver for presentation panel");
+console.log(
+  " is hyperbaseContainer there",
+  document.querySelector("#hyperbaseContainer")
+);
 observerForPresentationPanel.observe(
   document.querySelector("#hyperbaseContainer"),
   {

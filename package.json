@@ -1,5 +1,5 @@
 {
-  "name": "airtable-hint-gpt",
+  "name": "airtable-hint-gpt-debug",
   "version": "1.1.1",
   "description": "GPT hints for Airtable formula field",
   "license": "MIT",
