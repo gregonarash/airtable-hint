@@ -173,9 +173,9 @@ function addHintGPTButton() {
     ? $("#hyperbaseContainer > [role='presentation']").find(
         "#createColumnDialogCancelButton"
       )
-    : $("#hyperbaseContainer > [role='presentation']")
-        .find("div:contains('Cancel')")
-        .filter("[role='button']");
+    : $("#hyperbaseContainer > [role='presentation']").find(
+        "button:contains('Cancel')"
+      );
 
   cancelButtonLocation.after(
     '<div tabindex="0" aria-label="Hint GPT" id="hintGPT" class="text-white mr2 flex-none flex-inline items-center justify-center rounded green greenDark1-hover greenDark1-focus strong pointer focus-visible" role="button" style="width: 80px; height: 26px;">Hint GPT</div>'
