@@ -75,6 +75,9 @@ export async function createChatCompletion({
   const temperature =
     (await chrome.storage.sync.get("temperature"))?.temperature || 0.2;
 
+  const model =
+    (await chrome.storage.sync.get("chatModel"))?.chatModel || "gpt-3.5-turbo";
+
   const messages = [
     {
       role: "system",
@@ -89,8 +92,10 @@ export async function createChatCompletion({
     { role: "user", content: userPrompt },
   ];
 
+  console.log("model", model);
+
   const body = {
-    model: "gpt-3.5-turbo",
+    model: model,
     messages: messages,
     max_tokens: 3500,
     temperature: temperature, //range 0-2 according to docs but PlayGround uses 0-1
@@ -120,6 +125,38 @@ export async function createChatCompletion({
       /^\n+/,
       ""
     );
+    return { success: true, data: formattedResponse };
+  } catch (err) {
+    console.log("error in request", err);
+    return {
+      success: false,
+      data:
+        err?.error?.message?.replace(/^\n+/, "") ||
+        "Error connecting to OpenAI",
+    };
+  }
+}
+
+export async function listModels() {
+  const apiKey = (await chrome.storage.sync.get("apiKey"))?.apiKey;
+
+  const options = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${apiKey}`,
+    },
+  };
+
+  try {
+    const response = await fetch("https://api.openai.com/v1/models", options);
+
+    const json = await response.json();
+    if (response.status !== 200) {
+      throw json || "Error connecting to OpenAI";
+    }
+    const formattedResponse = json.data.map((model) => model.id);
+
     return { success: true, data: formattedResponse };
   } catch (err) {
     console.log("error in request", err);

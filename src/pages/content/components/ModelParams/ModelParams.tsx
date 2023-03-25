@@ -1,13 +1,31 @@
+import Info from "@/components/icons/Info";
+import { listModels } from "@utils/openAi";
 import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { DialogDescription } from "../ui/dialog";
 import { Label } from "../ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 import { Slider } from "../ui/slider";
 import { Switch } from "../ui/switch";
+import {
+  Tooltip,
+  TooltipArrow,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../ui/tooltip";
 
 const ModelParams = () => {
   const [temp, setTemp] = useState<number>(0.2);
   const [chatMode, setChatMode] = useState<boolean>(true);
+  const [chatModel, setChatModel] = useState<string>("gpt-3.5-turbo");
+  const [GPT4available, setGPT4available] = useState<boolean>(false);
 
   useEffect(() => {
     const getTemp = async () => {
@@ -29,6 +47,26 @@ const ModelParams = () => {
     getCompletionMode();
   }, []);
 
+  useEffect(() => {
+    const getChatModel = async () => {
+      const chatModel = await chrome.storage.sync.get("chatModel");
+      if (chatModel && chatModel.chatModel !== undefined) {
+        setChatModel(chatModel.chatModel);
+      }
+    };
+    getChatModel();
+  }, []);
+
+  useEffect(() => {
+    const checkGPT4availability = async () => {
+      const modelList = await listModels();
+      if (modelList.data.includes("gpt-4")) {
+        setGPT4available(true);
+      }
+    };
+    checkGPT4availability();
+  }, []);
+
   return (
     <div>
       <h3 className="text-center text-base font-semibold text-slate-900 dark:text-slate-50 sm:text-left">
@@ -37,9 +75,28 @@ const ModelParams = () => {
       <DialogDescription className="text-center sm:text-left">
         Adjust settings for the model to modify responses
       </DialogDescription>
-      <div className="grid grid-cols-5 items-center gap-4 py-4 sm:grid-cols-8">
+      <div className="grid grid-cols-5 items-center gap-4 py-4 pl-1 sm:grid-cols-8">
         <Label htmlFor="name" className="break-words text-right sm:col-span-2">
-          Temperature {temp}
+          <TooltipProvider delayDuration={0}>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="flex flex-wrap items-center justify-start ">
+                  Temp
+                  <Info className="w-6 pl-1 pr-2" />
+                  {temp}{" "}
+                </div>
+              </TooltipTrigger>
+              <TooltipContent className="max-w-xs justify-start text-start text-sm">
+                <span className="font-semibold">Default: 0.2 </span>
+                <span className="font-normal">
+                  Setting temperature to 0 will make the answers mostly
+                  deterministic, while a higher number will create more
+                  randomness/variety in the responses.
+                </span>
+                <TooltipArrow />
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </Label>
 
         <Slider
@@ -51,7 +108,7 @@ const ModelParams = () => {
           }
           max={1}
           step={0.1}
-        />
+        ></Slider>
 
         <Button
           className="w-11 py-2"
@@ -78,12 +135,35 @@ const ModelParams = () => {
           </svg>
         </Button>
       </div>
-      <div className="pb-4">
-        <span className="font-semibold">Default: 0.2</span> Setting temperature
-        to 0 will make the answers mostly deterministic, while a higher number
-        will create more randomness/variety in the responses.
-      </div>
-      <div className="flex items-center space-x-2 pb-4">
+
+      <div className="flex items-center space-x-2 pb-4 pl-1">
+        <Label htmlFor="chat-completion-mode">
+          <TooltipProvider delayDuration={0}>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="flex flex-wrap items-center justify-end ">
+                  {chatMode
+                    ? "ChatGPT Completion Mode"
+                    : "Regular GPT Prompt Mode"}
+                  <Info className="w-6 pl-1 pr-2" />
+                </div>
+              </TooltipTrigger>
+              <TooltipContent className="max-w-xs justify-start text-start text-sm">
+                <span className="font-semibold">
+                  Default: ChatGPT Completion Mode{" "}
+                </span>
+                <span className="font-normal">
+                  We recommend using ChatGPT completions (based on the
+                  "gpt-3.5-turbo" model). Regular GPT completions are based on
+                  "text-davinci-003" model. While both types yield similar
+                  results in most cases, the ChatGPT model is significantly
+                  cheaper to use.
+                </span>
+                <TooltipArrow />
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </Label>
         <Switch
           checked={chatMode}
           onCheckedChange={async (e) => {
@@ -92,18 +172,30 @@ const ModelParams = () => {
           }}
           id="chat-completion-mode"
         />
-        <Label htmlFor="airplane-mode">
-          {chatMode
-            ? "ChatGPT Completion Model"
-            : "Regular GPT Completion Model"}
-        </Label>
       </div>
-      <div className="pb-4">
-        <span className="font-semibold">Default: ChatGPT Completion Model</span>{" "}
-        We recommend using ChatGPT completions (based on the "gpt-3.5-turbo"
-        model). Regular GPT completions are based on "text-davinci-003" model.
-        While both types yield similar results in most cases, the ChatGPT model
-        is significantly cheaper to use.
+      <div className="flex items-center space-x-2 pb-4 pl-1">
+        <Label htmlFor="ai-model">Model:</Label>
+        {chatMode ? (
+          <Select
+            onValueChange={async (e) => {
+              setChatModel(e);
+              await chrome.storage.sync.set({ chatModel: e });
+            }}
+            value={chatModel}
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Select a fruit" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="gpt-3.5-turbo">GPT 3.5 Turbo</SelectItem>
+              {GPT4available && <SelectItem value="gpt-4">GPT 4</SelectItem>}
+            </SelectContent>
+          </Select>
+        ) : (
+          <span className="text-center text-sm text-slate-500 dark:text-slate-400 sm:text-left">
+            Text Davinci 003
+          </span>
+        )}
       </div>
     </div>
   );
