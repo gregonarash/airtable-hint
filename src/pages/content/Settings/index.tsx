@@ -1,11 +1,11 @@
-import App from "@src/pages/content/components/Demo/app";
+import App from "@src/pages/content/Settings/app";
 import { cssom, observe, twind } from "@twind/core";
 import "construct-style-sheets-polyfill";
 import { createRoot } from "react-dom/client";
 import refreshOnUpdate from "virtual:reload-on-update-in-view";
-import config from "../../../../../twind.config";
+import config from "../../../../twind.config";
 
-refreshOnUpdate("pages/content/components/Demo");
+refreshOnUpdate("pages/content/Settings");
 
 // Create separate CSSStyleSheet
 const sheet = cssom(new CSSStyleSheet());
