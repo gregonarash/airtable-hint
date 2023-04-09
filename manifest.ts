@@ -37,10 +37,10 @@ const manifest: chrome.runtime.ManifestV3 = {
         "icon-128.png",
         "icon-34.png",
       ],
-      matches: ["*://*/*"],
+      matches: ["https://airtable.com/*"],
     },
   ],
-  permissions: ["activeTab", "tabs", "storage"],
+  permissions: ["storage"],
 };
 
 export default manifest;
